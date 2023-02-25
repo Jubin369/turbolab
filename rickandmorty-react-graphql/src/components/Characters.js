@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { Heading, SimpleGrid, Stack } from "@chakra-ui/react";
 import { GET_ALL_CHARACTERS } from "../queries";
 import Card from "./Card";
 
@@ -11,14 +12,16 @@ const Characters = () => {
   if (error) return <p>Error {error.message}</p>;
 
   return (
-    <>
-      <header></header>
-      <div className="row">
+    <Stack backgroundColor="skyblue">
+      <Heading textAlign="center" m="20px">
+        Characters
+      </Heading>
+      <SimpleGrid columns={[1, 2, 3, 4]} spacing={5} px="20px">
         {data?.characters?.results.map((character) => (
           <Card character={character} key={character.id} />
         ))}
-      </div>
-    </>
+      </SimpleGrid>
+    </Stack>
   );
 };
 

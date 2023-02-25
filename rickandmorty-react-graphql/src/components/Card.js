@@ -1,18 +1,27 @@
-const Card = ( { character } ) => {
+import { Image, Stack, Text } from "@chakra-ui/react";
+
+const Card = ({ character }) => {
   return (
-    <div className="card w-25">
-      <img src={character.image} className="card-img-top" alt="character" />
-      <div className="card-body">
-        <h5 className="card-title, mb-0">{character.name}</h5>
-        <p className="card-text">
+    <Stack backgroundColor="blue.100" borderRadius="10px">
+      <Image
+        src={character.image}
+        alt="character"
+        borderRadius="10px"
+        m="10px"
+      />
+      <Stack p="20px">
+        <Text fontWeight={"bold"}>{character.name}</Text>
+        <Text fontSize={"sm"}>
           {character.status} - {character.species}
-        </p>
+        </Text>
 
-        <h6 className="card-subtitle text-muted">Last known location</h6>
-        <p className="card-text">{character.location.name}</p>
-      </div>
-    </div>
-  )
-}
+        <Text fontSize={"sm"} color="GrayText">
+          Last known location
+        </Text>
+        <Text fontSize={"sm"}>{character.location.name}</Text>
+      </Stack>
+    </Stack>
+  );
+};
 
-export default Card
+export default Card;
