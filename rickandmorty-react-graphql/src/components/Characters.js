@@ -1,5 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import {
+  Button,
   Heading,
   IconButton,
   Input,
@@ -14,43 +15,42 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { isEmpty } from "lodash";
-import { FiSearch, FiX } from "react-icons/fi";
+import { FiSearch, FiX, FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { GET_ALL_CHARACTERS } from "../queries";
 import Card from "./Card";
 
 const Characters = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   const [getSearchCharaters, { loading, error, data, called }] = useLazyQuery(
     GET_ALL_CHARACTERS,
     {
-      variables: { page: 1, name: searchQuery },
+      variables: { page: page, name: searchQuery },
     }
   );
 
   useEffect(() => {
     getSearchCharaters();
-  }, [searchQuery]);
+  }, [searchQuery, page]);
 
   if (error) return <p>Error {error.message}</p>;
 
-  // const isBottomNavigation =
-  //   (data?.length === 0 && isEmpty(searchQuery) && !loading) ||
-  //   (searchResults?.length === 0 && !isEmpty(searchQuery) && !searchLoading);
+  let totalPages = data?.characters?.info?.pages;
+  const isBottomNavigation = data?.length === 0 && totalPages > 1 && !loading;
 
   return (
     <Stack backgroundColor="skyblue">
-      <Stack
-        direction="row"
+      <SimpleGrid
+        columns={[1, 1, 3, 3]}
         align="center"
-        width={["100%", "80%", "50%", "50%"]}
+        width={["100%", "80%", "70%", "70%"]}
         justify="space-between"
         alignSelf="center"
+        m="20px"
       >
-        <Heading textAlign="center" m="20px">
-          Characters
-        </Heading>
-        <InputGroup>
+        <Heading textAlign="center">Characters</Heading>
+        <InputGroup mt="5px">
           <InputLeftElement>
             <IconButton
               aria-label="search"
@@ -69,6 +69,7 @@ const Characters = () => {
             placeholder="Search Characters"
             onChange={(event) => {
               setSearchQuery(event?.target?.value);
+              setPage(1);
             }}
             borderRadius="xl"
             inputProps={{
@@ -92,12 +93,46 @@ const Characters = () => {
                 variant="link"
                 onClick={() => {
                   setSearchQuery("");
+                  setPage(1);
                 }}
               />
             </InputRightElement>
           )}
         </InputGroup>
-      </Stack>
+        {!isBottomNavigation && (
+          <Stack direction="row" align="center" justify="flex-end">
+            <Button
+              size="xs"
+              leftIcon={<FiArrowLeft />}
+              variant="ghost"
+              alignSelf="flex-end"
+              isDisabled={page === 1}
+              onClick={() => {
+                setPage(page - 1);
+              }}
+            >
+              Previous
+            </Button>
+            <Text w="170px" pt="20px">
+              page:{page},Total pages({totalPages})
+            </Text>
+            <Button
+              size="xs"
+              onClick={() => {
+                setPage(page + 1);
+              }}
+              isLoading={loading}
+              isDisabled={totalPages <= page}
+              colorScheme="blue"
+              rightIcon={<FiArrowRight />}
+              variant="solid"
+              alignSelf="flex-end"
+            >
+              Next
+            </Button>
+          </Stack>
+        )}
+      </SimpleGrid>
       {loading && <Text textAlign="center"> Loading</Text>}
       {!loading && (
         <SimpleGrid columns={[1, 2, 3, 4]} spacing={5} px="20px">
@@ -106,36 +141,6 @@ const Characters = () => {
           ))}
         </SimpleGrid>
       )}
-      {/* {!isBottomNavigation && (
-        <Stack direction="row" my="8" align="center" justify="flex-end" pb={4}>
-          <Button
-            size="xs"
-            leftIcon={<FiArrowLeft />}
-            variant="ghost"
-            alignSelf="flex-end"
-            isDisabled={offset === 0}
-            onClick={() => {
-              setOffset(offset - limit);
-            }}
-          >
-            Previous
-          </Button>
-          <Button
-            size="xs"
-            onClick={() => {
-              setOffset(offset + limit);
-            }}
-            isLoading={isLoadingReviews}
-            isDisabled={totalPages - offset / limit === 1}
-            colorScheme="blue"
-            rightIcon={<FiArrowRight />}
-            variant="solid"
-            alignSelf="flex-end"
-          >
-            Next
-          </Button>
-        </Stack>
-      )} */}
     </Stack>
   );
 };
