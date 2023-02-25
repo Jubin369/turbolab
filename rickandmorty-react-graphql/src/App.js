@@ -1,27 +1,18 @@
-import { useQuery } from "@apollo/client";
-import { GET_ALL_CHARACTERS } from "./queries";
-import Card from "./Card";
+import Navbar from "./components/Navbar";
+import Characters from "./components/Characters";
+import Episodes from "./components/Episodes";
+import { Routes, Route } from "react-router-dom";
 
-const App = () => {
-  const { loading, error, data } = useQuery(GET_ALL_CHARACTERS, {
-    variables: { page: 3 },
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error {error.message}</p>;
-
+function App() {
   return (
     <>
-      <header>
-        <h1 className="text-center m-5">Rick and Morty GraphQL App</h1>
-      </header>
-      <div className="row">
-        {data?.characters?.results.map((character) => (
-          <Card character={character} key={character.id} />
-        ))}
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Characters />} />
+        <Route path="/episodes" element={<Episodes />} />
+      </Routes>
     </>
   );
-};
+}
 
 export default App;
