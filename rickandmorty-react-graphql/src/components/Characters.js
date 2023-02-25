@@ -12,9 +12,7 @@ const Characters = () => {
 
   return (
     <>
-      <header>
-        <h1 className="text-center m-5">Rick and Morty GraphQL App</h1>
-      </header>
+      <header></header>
       <div className="row">
         {data?.characters?.results.map((character) => (
           <Card character={character} key={character.id} />

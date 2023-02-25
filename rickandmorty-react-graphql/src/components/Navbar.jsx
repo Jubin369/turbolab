@@ -1,50 +1,80 @@
-import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import React from "react";
+import {
+  Box,
+  Button,
+  chakra,
+  Flex,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-//import Logo from "../assets/logo.png";
-// import { Link } from 'react-scroll';
+const NavMobileLink = ({ children, path }) => {
+  return (
+    <Box
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+    >
+      <a href={path}>{children}</a>
+    </Box>
+  );
+};
 
 const Navbar = () => {
-  const [nav, setNav] = useState(false);
-  const handleClick = () => setNav(!nav);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <div className="fixed w-full h-[80px] flex justify-between items-center px-4 bg-[#0a192f] text-gray-300">
-      <div>
-        <img src="" alt="Logo Image" style={{ width: "200px" }} />
-      </div>
-
-      {/* menu */}
-      <ul className="hidden md:flex">
-        <li>
-          <a href="/">Characters</a>
-        </li>
-        <li>
-          <a href="/episodes">Episodes</a>
-        </li>
-      </ul>
-
-      {/* Hamburger */}
-      <div onClick={handleClick} className="md:hidden z-10">
-        {!nav ? <FaBars /> : <FaTimes />}
-      </div>
-
-      {/* Mobile menu */}
-      <ul
-        className={
-          !nav
-            ? "hidden"
-            : "absolute top-0 left-0 w-full h-screen bg-[#0a192f] flex flex-col justify-center items-center"
-        }
+    <chakra.header id="header">
+      <Flex
+        w="100%"
+        px="6"
+        py="5"
+        align="center"
+        justify="space-between"
+        backgroundColor="yellow"
+        color="black"
       >
-        <li className="py-6 text-4xl">
-          <a href="/">Characters</a>
-        </li>
-        <li className="py-6 text-4xl">
-          <a href="/episodes">Episodes</a>
-        </li>
-      </ul>
-    </div>
+        <IconButton
+          size={"md"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={"Open Menu"}
+          display={{ md: "none" }}
+          onClick={isOpen ? onClose : onOpen}
+        />
+        <Text>Rick and Morty GraphQL App</Text>
+
+        <HStack as="nav" spacing="5" display={{ base: "none", md: "flex" }}>
+          <a href="/">
+            <Button variant="nav"> Characters </Button>
+          </a>
+
+          <a href="/episodes">
+            <Button variant="nav"> Episodes </Button>
+          </a>
+        </HStack>
+      </Flex>
+      {isOpen ? (
+        <Box pb={4} display={{ md: "none" }}>
+          <Stack as={"nav"} spacing={4}>
+            <NavMobileLink key="characters" path="/">
+              Characters
+            </NavMobileLink>
+            <NavMobileLink key="episodes" path="/episodes">
+              Episodes
+            </NavMobileLink>
+          </Stack>
+        </Box>
+      ) : null}
+    </chakra.header>
   );
 };
 
