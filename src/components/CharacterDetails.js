@@ -13,7 +13,7 @@ const CharacterDetails = () => {
   });
 
   let character = data?.character;
-  console.log("data---------", data);
+
   if (error) return <p>Error {error.message}</p>;
 
   return (

@@ -76,4 +76,19 @@ const GET_ALL_EPISODES = gql`
   }
 `;
 
-export { GET_ALL_CHARACTERS, GET_CHARACTER, GET_ALL_EPISODES };
+const GET_EPISODE = gql`
+  query GetEpisode($id: ID!) {
+    episode(id: $id) {
+      id
+      name
+      air_date
+      episode
+      characters {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export { GET_ALL_CHARACTERS, GET_CHARACTER, GET_ALL_EPISODES, GET_EPISODE };
