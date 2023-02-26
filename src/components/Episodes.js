@@ -70,7 +70,7 @@ const Episodes = () => {
               setPage(1);
             }}
             borderRadius="xl"
-            inputProps={{
+            inputprops={{
               variant: "filled",
             }}
             _focus={{
