@@ -113,7 +113,7 @@ const Characters = () => {
             >
               Previous
             </Button>
-            <Text w="170px" pt="20px">
+            <Text w="200px" pt="20px">
               page:{page},Total pages({totalPages})
             </Text>
             <Button
