@@ -76,7 +76,7 @@ const CharacterDetails = () => {
           </Text>
           {character?.episode?.map((eps) => {
             return (
-              <a href={`/episode/${eps?.id}`}>
+              <a href={`/episode/${eps?.id}`} key={eps?.id}>
                 <Stack backgroundColor={"blue.300"} borderRadius="5px" p="10px">
                   <Text>name: {eps.name}</Text>
                   <Text>episode: {eps.episode}</Text>
