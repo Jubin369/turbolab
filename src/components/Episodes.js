@@ -35,7 +35,7 @@ const Episodes = () => {
   if (error) return <p>Error {error.message}</p>;
 
   let totalPages = data?.episodes?.info?.pages;
-  const isBottomNavigation = data?.length === 0 && totalPages > 1 && !loading;
+  const isBottomNavigation = data?.length !== 0 && totalPages > 1 && !loading;
 
   return (
     <Stack backgroundColor="skyblue">
@@ -97,7 +97,7 @@ const Episodes = () => {
             </InputRightElement>
           )}
         </InputGroup>
-        {!isBottomNavigation && (
+        {isBottomNavigation && (
           <Stack direction="row" align="center" justify="flex-end">
             <Button
               size="xs"
