@@ -12,26 +12,17 @@ import {
   Select,
   Stack,
   StackDivider,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Tag,
-  TagLabel,
   Text,
   useDisclosure,
-  Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
 import { FiFilter, FiX } from "react-icons/fi";
 
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 
 export const FilterPopover = ({ onChangeFilters }) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
-  //const firstFieldRef = React.useRef(null);
+  const firstFieldRef = React.useRef(null);
 
   const formik = useFormik({
     initialValues: {
@@ -61,7 +52,7 @@ export const FilterPopover = ({ onChangeFilters }) => {
   return (
     <Popover
       isOpen={isOpen}
-      // initialFocusRef={firstFieldRef}
+      initialFocusRef={firstFieldRef}
       onOpen={onOpen}
       onClose={onClose}
       placement="bottom"
