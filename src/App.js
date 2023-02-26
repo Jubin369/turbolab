@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Characters from "./components/Characters";
 import Episodes from "./components/Episodes";
+import CharacterDetails from "./components/CharacterDetails";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Characters />} />
         <Route path="/episodes" element={<Episodes />} />
+        <Route path="/character/:id" element={<CharacterDetails />} />
       </Routes>
     </>
   );

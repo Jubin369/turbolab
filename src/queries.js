@@ -35,6 +35,30 @@ const GET_ALL_CHARACTERS = gql`
   }
 `;
 
+const GET_CHARACTER = gql`
+  query GetCharacter($id: ID!) {
+    character(id: $id) {
+      id
+      image
+      name
+      status
+      species
+      origin {
+        name
+      }
+      location {
+        name
+      }
+      gender
+      episode {
+        id
+        name
+        episode
+      }
+    }
+  }
+`;
+
 const GET_ALL_EPISODES = gql`
   query Episodes($page: Int, $name: String) {
     episodes(page: $page, filter: { name: $name }) {
@@ -52,4 +76,4 @@ const GET_ALL_EPISODES = gql`
   }
 `;
 
-export { GET_ALL_CHARACTERS, GET_ALL_EPISODES };
+export { GET_ALL_CHARACTERS, GET_CHARACTER, GET_ALL_EPISODES };
