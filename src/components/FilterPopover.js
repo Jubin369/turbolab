@@ -1,8 +1,5 @@
-import { gql, useQuery } from "@apollo/client";
 import {
   Button,
-  Checkbox,
-  CheckboxGroup,
   FormControl,
   IconButton,
   Popover,
