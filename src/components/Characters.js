@@ -28,17 +28,16 @@ const Characters = () => {
     species: "",
   });
 
-  console.log("============", filters);
   const [getSearchCharaters, { loading, error, data, called }] = useLazyQuery(
     GET_ALL_CHARACTERS,
     {
-      variables: { page: page, name: searchQuery },
+      variables: { page: page, name: searchQuery, ...filters },
     }
   );
 
   useEffect(() => {
     getSearchCharaters();
-  }, [searchQuery, page]);
+  }, [searchQuery, page, filters]);
 
   if (error) return <p>Error {error.message}</p>;
 
