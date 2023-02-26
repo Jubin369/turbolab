@@ -106,9 +106,6 @@ export const FilterPopover = ({ onChangeFilters }) => {
             <Stack flexDir={"row"} justifyContent="space-between">
               <Text fontSize="sm" fontWeight="semibold">
                 Filter
-                <Text fontSize="xs" fontWeight="medium" color="gray.400">
-                  You can apply multiple filters at the same time.
-                </Text>
               </Text>
               <Button
                 size="xs"
