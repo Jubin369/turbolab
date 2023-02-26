@@ -16,11 +16,19 @@ import { isEmpty } from "lodash";
 import { FiSearch, FiX, FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { GET_ALL_CHARACTERS } from "../queries";
 import Card from "./Card";
+import { FilterPopover } from "./FilterPopover";
 
 const Characters = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
 
+  const [filters, setFilters] = useState({
+    status: "",
+    gender: "",
+    species: "",
+  });
+
+  console.log("============", filters);
   const [getSearchCharaters, { loading, error, data, called }] = useLazyQuery(
     GET_ALL_CHARACTERS,
     {
@@ -131,14 +139,29 @@ const Characters = () => {
           </Stack>
         )}
       </SimpleGrid>
-      {loading && <Text textAlign="center"> Loading</Text>}
-      {!loading && (
-        <SimpleGrid columns={[1, 2, 3, 4]} spacing={5} px="20px">
-          {data?.characters?.results.map((character) => (
-            <Card character={character} key={character.id} />
-          ))}
-        </SimpleGrid>
-      )}
+      <Stack
+        direction="row"
+        width="100%"
+        justify="space-between"
+        alignSelf="start"
+      >
+        <FilterPopover
+          onChangeFilters={(values) => {
+            setFilters({
+              ...filters,
+              ...values,
+            });
+          }}
+        />
+        {loading && <Text textAlign="center"> Loading</Text>}
+        {!loading && (
+          <SimpleGrid columns={[1, 2, 3, 4]} spacing={5} px="20px">
+            {data?.characters?.results.map((character) => (
+              <Card character={character} key={character.id} />
+            ))}
+          </SimpleGrid>
+        )}
+      </Stack>
     </Stack>
   );
 };
