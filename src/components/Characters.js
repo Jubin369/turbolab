@@ -161,6 +161,39 @@ const Characters = () => {
           </SimpleGrid>
         )}
       </Stack>
+      {isBottomNavigation && (
+        <Stack direction="row" align="center" justify="flex-end" p="10px">
+          <Button
+            size="xs"
+            leftIcon={<FiArrowLeft />}
+            variant="ghost"
+            alignSelf="flex-end"
+            isDisabled={page === 1}
+            onClick={() => {
+              setPage(page - 1);
+            }}
+          >
+            Previous
+          </Button>
+          <Text w="200px" pt="20px">
+            page:{page},Total pages({totalPages})
+          </Text>
+          <Button
+            size="xs"
+            onClick={() => {
+              setPage(page + 1);
+            }}
+            isLoading={loading}
+            isDisabled={totalPages <= page}
+            colorScheme="blue"
+            rightIcon={<FiArrowRight />}
+            variant="solid"
+            alignSelf="flex-end"
+          >
+            Next
+          </Button>
+        </Stack>
+      )}
     </Stack>
   );
 };
